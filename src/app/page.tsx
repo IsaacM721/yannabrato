@@ -6,7 +6,7 @@ import { db } from "@/lib/firebase";
 import CategoryAccordion from "@/components/CategoryAccordion";
 import ProjectGrid from "@/components/ProjectGrid";
 import { motion } from "framer-motion";
-import AboutAccordion from "@/components/AboutAccordion";
+import AboutSection from "@/components/AboutSection";
 import ContactAccordion from "@/components/ContactAccordion";
 import HeroVideo from "@/components/HeroVideo";
 import { sortCategories } from "@/lib/utils";
@@ -33,6 +33,7 @@ export default function Home() {
   const [heroVideoUrl, setHeroVideoUrl] = useState("");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchData();
     fetchSettings();
   }, []);
@@ -40,7 +41,20 @@ export default function Home() {
   const fetchData = async () => {
     try {
       const projectsSnap = await getDocs(collection(db, "projects"));
-      const projectsData = projectsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Project[];
+      const projectsData = projectsSnap.docs.map(doc => {
+        const data = doc.data() as Project;
+        let category = data.category;
+
+        // Remap categories as requested
+        const lowerCat = category?.toLowerCase().trim();
+        if (lowerCat === "videoclips conceptuales" || lowerCat === "videos conceptuales") {
+          category = "dirección creativa & coreografía";
+        } else if (lowerCat === "casting") {
+          category = "producción y gestión de proyectos audiovisuales";
+        }
+
+        return { ...data, id: doc.id, category };
+      }) as Project[];
 
       // Filter out drafts from the public view
       const publishedProjects = projectsData.filter(p => p.published !== false);
@@ -65,10 +79,25 @@ export default function Home() {
     }
   };
 
-  // Extract unique categories from projects (excluding "Todos")
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
+
+  // Extract unique categories from projects (unifying duplicates)
   const categoriesList = useMemo(() => {
-    const cats = new Set(projects.map(p => p.category).filter(Boolean));
-    return Array.from(cats).sort(sortCategories);
+    // Group projects by normalized category name
+    const categoryMap = new Map<string, string>(); // normalized -> canonical
+    
+    projects.forEach(p => {
+      const cat = p.category?.trim();
+      if (cat) {
+        const normalized = cat.toLowerCase();
+        if (!categoryMap.has(normalized)) {
+          // Keep the first one found, or prefer lowercase if it matches PREDEFINED_ORDER
+          categoryMap.set(normalized, cat);
+        }
+      }
+    });
+
+    return Array.from(categoryMap.values()).sort(sortCategories);
   }, [projects]);
 
   return (
@@ -117,8 +146,9 @@ export default function Home() {
               <CategoryAccordion
                 key={cat}
                 title={cat}
-                projects={projects.filter(p => p.category === cat)}
-                initialOpen={false}
+                projects={projects.filter(p => p.category.toLowerCase().trim() === cat.toLowerCase().trim())}
+                isOpen={openCategory === cat}
+                onToggle={() => setOpenCategory(openCategory === cat ? null : cat)}
               />
             ))}
           </div>
@@ -131,11 +161,17 @@ export default function Home() {
         )}
 
         <div id="sobre-mi">
-          <AboutAccordion />
+          <AboutSection 
+            isOpen={openCategory === "sobre-mi"} 
+            onToggle={() => setOpenCategory(openCategory === "sobre-mi" ? null : "sobre-mi")}
+          />
         </div>
 
         <div id="contacto">
-          <ContactAccordion />
+          <ContactAccordion 
+            isOpen={openCategory === "contacto"} 
+            onToggle={() => setOpenCategory(openCategory === "contacto" ? null : "contacto")}
+          />
         </div>
 
       </div>

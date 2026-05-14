@@ -17,7 +17,6 @@ export function slugify(text: string): string {
 
 export const PREDEFINED_ORDER = [
   "dirección creativa & coreografía",
-  "videoclips conceptuales",
   "producción y gestión de proyectos audiovisuales",
   "postproducción"
 ];

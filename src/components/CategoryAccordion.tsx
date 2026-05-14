@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import ProjectGrid from "./ProjectGrid";
@@ -9,16 +8,16 @@ import { Project } from "@/lib/data";
 interface CategoryAccordionProps {
     title: string;
     projects: Project[];
-    initialOpen?: boolean;
+    isOpen: boolean;
+    onToggle: () => void;
 }
 
-export default function CategoryAccordion({ title, projects, initialOpen = false }: CategoryAccordionProps) {
-    const [isOpen, setIsOpen] = useState(initialOpen);
+export default function CategoryAccordion({ title, projects, isOpen, onToggle }: CategoryAccordionProps) {
 
     return (
         <div className="border-b border-white/10 last:border-0">
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={onToggle}
                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center py-8 md:py-12 group transition-colors"
             >
                 {/* Left Spacer */}

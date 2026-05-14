@@ -5,13 +5,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import ContactForm from "./ContactForm";
 
-export default function ContactAccordion() {
-    const [isOpen, setIsOpen] = useState(false);
+interface ContactAccordionProps {
+    isOpen?: boolean;
+    onToggle?: () => void;
+}
+
+export default function ContactAccordion({ isOpen: propsIsOpen, onToggle }: ContactAccordionProps) {
+    const [internalIsOpen, setInternalIsOpen] = useState(false);
+    
+    const isOpen = propsIsOpen !== undefined ? propsIsOpen : internalIsOpen;
+    const toggle = onToggle || (() => setInternalIsOpen(!internalIsOpen));
 
     return (
-        <div className="border-t border-white/10 mt-20">
+        <div className="border-t border-white/10">
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={toggle}
                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center py-8 md:py-12 group transition-colors"
             >
                 {/* Left Spacer */}
