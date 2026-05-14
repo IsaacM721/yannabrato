@@ -12,7 +12,7 @@ export default function Footer() {
         <footer className="px-4 md:px-10 py-10 bg-black text-[#637381] mix-blend-difference border-t border-white/10 mt-20">
             <div className="flex flex-col md:flex-row justify-between items-end gap-10">
                 <div className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#637381] opacity-70">
-                    &copy; {new Date().getFullYear()} Yana Beato
+                    &copy; {new Date().getFullYear()} Yanna Beato
                 </div>
 
                 <div className="flex gap-6 font-reenie text-xl">
@@ -35,7 +35,15 @@ export default function Footer() {
                         Email
                     </a>
                     <Link
-                        href="/about"
+                        href="/#sobre-mi"
+                        className="hover:text-accent transition-colors"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        Sobre Mí
+                    </Link>
+                    <Link
+                        href="/#contacto"
                         className="hover:text-accent transition-colors"
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}

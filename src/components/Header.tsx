@@ -21,15 +21,25 @@ export default function Header() {
                 Yanna Beato
             </Link>
 
-            {/* Right: Contact Link */}
-            <Link
-                href="/#contacto"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="font-reenie text-3xl md:text-4xl z-50 relative tracking-widest hover:text-accent transition-colors pt-1"
-            >
-                CONTACTO
-            </Link>
+            {/* Right: Navigation Links */}
+            <nav className="flex gap-6 md:gap-10">
+                <Link
+                    href="/#sobre-mi"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="font-reenie text-3xl md:text-4xl z-50 relative tracking-widest hover:text-accent transition-colors pt-1"
+                >
+                    SOBRE MÍ
+                </Link>
+                <Link
+                    href="/#contacto"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="font-reenie text-3xl md:text-4xl z-50 relative tracking-widest hover:text-accent transition-colors pt-1"
+                >
+                    CONTACTO
+                </Link>
+            </nav>
         </header>
     );
 }

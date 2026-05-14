@@ -33,7 +33,10 @@ export default function Home() {
   const [heroVideoUrl, setHeroVideoUrl] = useState("");
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Only scroll to top if there's no hash in the URL
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
     fetchData();
     fetchSettings();
   }, []);
@@ -80,6 +83,27 @@ export default function Home() {
   };
 
   const [openCategory, setOpenCategory] = useState<string | null>(null);
+
+  // Handle URL hashes to open accordions automatically
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === "#contacto") {
+        setOpenCategory("contacto");
+      } else if (hash === "#sobre-mi") {
+        setOpenCategory("sobre-mi");
+      }
+    };
+
+    // Check on mount (after a slight delay to ensure content is loaded)
+    const timeoutId = setTimeout(handleHash, 100);
+    
+    window.addEventListener("hashchange", handleHash);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("hashchange", handleHash);
+    };
+  }, []);
 
   // Extract unique categories from projects (unifying duplicates)
   const categoriesList = useMemo(() => {
