@@ -88,8 +88,8 @@ export default function Home() {
             <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-reenie leading-none text-[#637381]">
               Yanna Beato
             </h1>
-            <div className="mt-12">
-              <h2 className="font-sans text-xl md:text-3xl lg:text-4xl text-[#637381] uppercase tracking-[0.5em] font-light opacity-90">
+            <div className="mt-8">
+              <h2 className="font-sans text-sm md:text-base text-[#637381] uppercase tracking-[0.4em] opacity-80">
                 Movement · Vision · Direction
               </h2>
             </div>
