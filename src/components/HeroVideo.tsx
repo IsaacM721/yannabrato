@@ -66,6 +66,13 @@ export default function HeroVideo({ videoUrl }: HeroVideoProps) {
                     muted
                     loop
                     playsInline
+                    onTimeUpdate={(e) => {
+                        const video = e.currentTarget;
+                        if (video.currentTime >= 120) {
+                            video.currentTime = 0;
+                            video.play();
+                        }
+                    }}
                     className="w-full h-full object-cover"
                 >
                     <source src={src} type={src.includes(".mov") ? "video/quicktime" : "video/mp4"} />

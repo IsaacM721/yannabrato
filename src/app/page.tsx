@@ -41,10 +41,10 @@ export default function Home() {
     try {
       const projectsSnap = await getDocs(collection(db, "projects"));
       const projectsData = projectsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Project[];
-      
+
       // Filter out drafts from the public view
       const publishedProjects = projectsData.filter(p => p.published !== false);
-      
+
       setProjects(publishedProjects);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -77,7 +77,7 @@ export default function Home() {
       <section className="relative h-screen w-full flex flex-col items-center justify-center text-center overflow-hidden">
         {/* Video Background */}
         <HeroVideo videoUrl={heroVideoUrl} />
-        
+
         {/* Branding Overlay */}
         <div className="relative z-20 px-4">
           <motion.div
@@ -88,13 +88,10 @@ export default function Home() {
             <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-reenie leading-none text-[#637381]">
               Yanna Beato
             </h1>
-            <div className="mt-8 space-y-4">
-              <h2 className="font-sans text-xs md:text-sm text-[#637381] uppercase tracking-[0.3em] font-medium opacity-90">
-                Coreógrafa y directora de movimiento para audiovisual
+            <div className="mt-12">
+              <h2 className="font-sans text-xl md:text-3xl lg:text-4xl text-[#637381] uppercase tracking-[0.5em] font-light opacity-90">
+                Movement · Vision · Direction
               </h2>
-              <p className="font-sans text-[10px] md:text-xs text-[#637381] uppercase tracking-[0.4em] opacity-70">
-                Narrativa · Cuerpo · Cámara
-              </p>
             </div>
           </motion.div>
         </div>
@@ -108,8 +105,8 @@ export default function Home() {
               <div key={i} className="border-b border-white/5 py-12">
                 <div className="h-20 bg-zinc-900 animate-pulse rounded w-1/3 mb-8" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="aspect-video bg-zinc-900 animate-pulse rounded" />
-                    <div className="aspect-video bg-zinc-900 animate-pulse rounded" />
+                  <div className="aspect-video bg-zinc-900 animate-pulse rounded" />
+                  <div className="aspect-video bg-zinc-900 animate-pulse rounded" />
                 </div>
               </div>
             ))}
