@@ -92,23 +92,6 @@ const PROJECT_UPDATES: Record<string, { credits?: string; description?: string; 
     },
 };
 
-// ============================================================
-// 3. MISSING PROJECT
-// ============================================================
-const MISSING_PROJECT = {
-    title: "La Combi Versace — Rosalía & Tokischa",
-    slug: "la-combi-versace",
-    category: "Videoclips conceptuales",
-    year: "2022",
-    credits: "Dirección General · Producción · Coreografía",
-    description: "Videoclip conceptual de autoría propia, basado en la canción completa de Rosalía & Tokischa, integrando narrativa cinematográfica y composición coreográfica.",
-    thumbnail: "",
-    thumbnailPoster: "",
-    videoUrl: null,
-    published: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-};
 
 export async function POST() {
     try {
@@ -147,14 +130,6 @@ export async function POST() {
             }
         }
 
-        // Add missing project
-        const existing = projects.find(p => ((p as any).title || "").toLowerCase().includes("la combi versace"));
-        if (!existing) {
-            const docRef = await db.collection("projects").add(MISSING_PROJECT);
-            results.push(`🆕 Added "La Combi Versace — Rosalía & Tokischa" (${docRef.id})`);
-        } else {
-            results.push(`⏭️ "La Combi Versace" already exists, skipped.`);
-        }
 
         return NextResponse.json({
             success: true,

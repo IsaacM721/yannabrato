@@ -735,49 +735,6 @@
       },
       "createTime": "2026-03-10T04:08:51.264243Z",
       "updateTime": "2026-03-14T01:46:54.869163Z"
-    },
-    {
-      "name": "projects/yannabratoo/databases/(default)/documents/projects/yghaGD3KFeEwYu1w3WlM",
-      "fields": {
-        "thumbnailPoster": {
-          "stringValue": ""
-        },
-        "title": {
-          "stringValue": "La Combi Versace — Rosalía & Tokischa"
-        },
-        "category": {
-          "stringValue": "Videoclips conceptuales"
-        },
-        "credits": {
-          "stringValue": "Dirección General · Producción · Coreografía"
-        },
-        "createdAt": {
-          "stringValue": "2026-03-14T01:43:05.488Z"
-        },
-        "year": {
-          "stringValue": "2022"
-        },
-        "updatedAt": {
-          "stringValue": "2026-03-14T01:43:05.488Z"
-        },
-        "videoUrl": {
-          "nullValue": null
-        },
-        "slug": {
-          "stringValue": "la-combi-versace"
-        },
-        "description": {
-          "stringValue": "Videoclip conceptual de autoría propia, basado en la canción completa de Rosalía & Tokischa, integrando narrativa cinematográfica y composición coreográfica."
-        },
-        "published": {
-          "booleanValue": true
-        },
-        "thumbnail": {
-          "stringValue": ""
-        }
-      },
-      "createTime": "2026-03-14T01:43:20.598146Z",
-      "updateTime": "2026-03-14T01:43:20.598146Z"
     }
   ]
 }

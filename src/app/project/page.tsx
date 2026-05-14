@@ -5,9 +5,16 @@ import { notFound, useSearchParams } from "next/navigation";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Play } from "lucide-react";
 import RelatedProjects from "@/components/RelatedProjects";
 import { useCursor } from "@/context/CursorContext";
+
+const BLOCKED_YOUTUBE_SLUGS = [
+    "popstar-drake",
+    "baile-inolvidable",
+    "bokete",
+    "where-she-goes"
+];
 
 interface Project {
     id: string;
@@ -215,6 +222,51 @@ function ProjectViewer() {
                     const videoInfo = project.videoUrl ? getVideoInfo(project.videoUrl) : null;
 
                     if (videoInfo) {
+                        const isBlockedYouTube = videoInfo.platform === 'youtube' && BLOCKED_YOUTUBE_SLUGS.includes(project.slug);
+
+                        if (isBlockedYouTube) {
+                            return (
+                                <div className="mb-20">
+                                    <a 
+                                        href={project.videoUrl!} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="relative block aspect-video bg-zinc-900 rounded-sm overflow-hidden group cursor-pointer"
+                                        onMouseEnter={() => setCursor("text", "PLAY")}
+                                        onMouseLeave={() => setCursor("default")}
+                                    >
+                                        {/* Thumbnail logic similar to index menu */}
+                                        {(project.thumbnail.includes(".mp4") || project.thumbnail.includes(".webm")) ? (
+                                            <video
+                                                src={project.thumbnail}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out"
+                                                muted
+                                                autoPlay
+                                                loop
+                                                playsInline
+                                            />
+                                        ) : (
+                                            <img
+                                                src={project.thumbnail}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out"
+                                            />
+                                        )}
+
+                                        {/* Play Button Overlay */}
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center text-black shadow-2xl transform transition-transform group-hover:scale-110 duration-500">
+                                                <Play size={32} fill="currentColor" className="ml-1 md:w-10 md:h-10" />
+                                            </div>
+                                        </div>
+
+                                        {/* Gradient Overlay */}
+                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+                                    </a>
+                                </div>
+                            );
+                        }
+
                         return (
                             <div className="mb-20"
                                 onMouseEnter={() => setCursor("hidden")}
