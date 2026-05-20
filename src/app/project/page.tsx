@@ -245,6 +245,12 @@ function ProjectViewer() {
                             return { platform: 'direct', id: url };
                         }
 
+                        // Instagram
+                        const igMatch = url.match(/instagram\.com\/(?:reel|p|tv)\/([A-Za-z0-9_-]+)/);
+                        if (igMatch) {
+                            return { platform: 'instagram', id: igMatch[1] };
+                        }
+
                         return null;
                     };
 
@@ -290,6 +296,35 @@ function ProjectViewer() {
                                         </div>
 
                                         {/* Gradient Overlay */}
+                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+                                    </a>
+                                </div>
+                            );
+                        }
+
+                        if (videoInfo.platform === 'instagram') {
+                            return (
+                                <div className="mb-20">
+                                    <a
+                                        href={project.videoUrl!}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="relative block aspect-video bg-zinc-900 rounded-sm overflow-hidden group cursor-pointer"
+                                        onMouseEnter={() => setCursor("text", "PLAY")}
+                                        onMouseLeave={() => setCursor("default")}
+                                    >
+                                        {project.thumbnail && (
+                                            <img
+                                                src={project.thumbnail}
+                                                alt={project.title}
+                                                className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out ${project.thumbnailPosition === 'top' ? 'object-top' : ''}`}
+                                            />
+                                        )}
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center text-black shadow-2xl transform transition-transform group-hover:scale-110 duration-500">
+                                                <Play size={32} fill="currentColor" className="ml-1 md:w-10 md:h-10" />
+                                            </div>
+                                        </div>
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                                     </a>
                                 </div>
