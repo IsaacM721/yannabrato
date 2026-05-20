@@ -68,11 +68,11 @@ export default function ProjectCard({ project, layoutId, className }: ProjectCar
                 {/* Aspect Ratio Container */}
                 <div className="relative w-full aspect-video overflow-hidden bg-gray-900 video-container">
                     {/* Thumbnail: Video or Image */}
-                    {(project.thumbnail.includes(".mp4") || project.thumbnail.includes(".webm")) ? (
+                    {(/\.(mp4|webm|mov|MOV)(\?|$)/.test(project.thumbnail)) ? (
                         <video
                             src={project.thumbnail}
                             poster={project.thumbnailPoster}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out"
+                            className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out ${project.thumbnailPosition === 'top' ? 'object-top' : ''}`}
                             muted={true}
                             autoPlay={true}
                             loop={true}
@@ -116,7 +116,7 @@ export default function ProjectCard({ project, layoutId, className }: ProjectCar
                         <motion.img
                             src={project.thumbnail}
                             alt={project.title || "Project Thumbnail"}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out"
+                            className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out ${project.thumbnailPosition === 'top' ? 'object-top' : ''}`}
                             loading="lazy"
                             decoding="async"
                         />

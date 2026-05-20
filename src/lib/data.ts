@@ -5,7 +5,8 @@ export interface Project {
 
     year: string;
     thumbnail: string;
-    thumbnailPoster?: string; // Optional static image for video thumbnails
+    thumbnailPoster?: string;
+    thumbnailPosition?: string;
     videoUrl?: string | null;
     credits?: string | null;
     description?: string | null;

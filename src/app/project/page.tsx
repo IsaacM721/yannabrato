@@ -23,6 +23,7 @@ interface Project {
     category: string;
     year: string;
     thumbnail: string;
+    thumbnailPosition?: string;
     videoUrl?: string | null;
     credits?: string | { role: string; name: string }[] | null;
     description?: string | null;
@@ -239,6 +240,11 @@ function ProjectViewer() {
                             return { platform: 'vimeo', id: vimeoMatch[1] };
                         }
 
+                        // Direct video file (Firebase Storage or any hosted .mp4/.mov/.webm)
+                        if (/\.(mp4|mov|webm|MOV|MP4)(\?|$)/.test(url)) {
+                            return { platform: 'direct', id: url };
+                        }
+
                         return null;
                     };
 
@@ -259,7 +265,7 @@ function ProjectViewer() {
                                         onMouseLeave={() => setCursor("default")}
                                     >
                                         {/* Thumbnail logic similar to index menu */}
-                                        {(project.thumbnail.includes(".mp4") || project.thumbnail.includes(".webm")) ? (
+                                        {(project.thumbnail?.includes(".mp4") || project.thumbnail?.includes(".webm")) ? (
                                             <video
                                                 src={project.thumbnail}
                                                 className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 ease-out"
@@ -306,6 +312,13 @@ function ProjectViewer() {
                                             allowFullScreen
                                             className="w-full h-full"
                                         />
+                                    ) : videoInfo.platform === 'direct' ? (
+                                        <video
+                                            src={videoInfo.id}
+                                            className="w-full h-full object-cover"
+                                            controls
+                                            playsInline
+                                        />
                                     ) : (
                                         <iframe
                                             src={`https://player.vimeo.com/video/${videoInfo.id}?autoplay=1&loop=1&autopause=0`}
@@ -322,12 +335,14 @@ function ProjectViewer() {
                         );
                     }
 
+                    if (!project.thumbnail) return null;
+
                     return (
                         <div className="mb-20 aspect-video bg-zinc-900 rounded-sm overflow-hidden">
                             <img
                                 src={project.thumbnail}
                                 alt={project.title || "Project thumbnail"}
-                                className="w-full h-full object-cover"
+                                className={`w-full h-full object-cover ${project.thumbnailPosition === 'top' ? 'object-top' : ''}`}
                             />
                         </div>
                     );
