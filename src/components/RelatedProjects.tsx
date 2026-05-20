@@ -19,10 +19,35 @@ export default function RelatedProjects({ currentProjectId }: RelatedProjectsPro
         const fetchProjects = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "projects"));
-                const allProjects = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })) as Project[];
+                const allProjects = querySnapshot.docs.map(doc => {
+                    const data = doc.data() as Project;
+                    let category = data.category;
+
+                    // Remap categories as requested
+                    const lowerCat = category?.toLowerCase().trim();
+                    if (
+                      lowerCat === "videoclips conceptuales" ||
+                      lowerCat === "videos conceptuales" ||
+                      lowerCat === "dirección creativa & coreografía" ||
+                      lowerCat === "creative direction & choreography"
+                    ) {
+                      category = "Creative Direction & Choreography";
+                    } else if (
+                      lowerCat === "casting" ||
+                      lowerCat === "producción y gestión de proyectos audiovisuales" ||
+                      lowerCat === "producción y gestión de eventos audiovisuales" ||
+                      lowerCat === "production & event management"
+                    ) {
+                      category = "Production & Event Management";
+                    } else if (
+                      lowerCat === "postproducción" ||
+                      lowerCat === "postproduction"
+                    ) {
+                      category = "Postproduction";
+                    }
+
+                    return { ...data, id: doc.id, category };
+                }) as Project[];
 
                 // Filter out current project, drafts, and random shuffle
                 const others = allProjects.filter(p => p.id !== currentProjectId && p.published !== false);

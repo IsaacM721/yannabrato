@@ -14,7 +14,7 @@ export default function ContactForm() {
 
         try {
             // Use mailto fallback for now (no backend needed)
-            const subject = encodeURIComponent(`Contacto Web — ${formData.name}`);
+            const subject = encodeURIComponent(`say hi — ${formData.name}`);
             const body = encodeURIComponent(
                 `Nombre: ${formData.name}\nEmail: ${formData.email}\n\nMensaje:\n${formData.message}`
             );

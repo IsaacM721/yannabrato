@@ -26,7 +26,7 @@ export default function AboutSection({ isOpen: propsIsOpen, onToggle }: AboutSec
                 
                 {/* Centered Title */}
                 <h2 className="text-3xl md:text-5xl lg:text-6xl font-reenie text-[#637381] group-hover:text-amber-100 transition-colors uppercase text-center">
-                    Sobre mí
+                    Who I am
                 </h2>
                 
                 {/* Right Arrow */}
@@ -47,7 +47,7 @@ export default function AboutSection({ isOpen: propsIsOpen, onToggle }: AboutSec
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
+                        transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
                         className="overflow-hidden"
                     >
                         <div className="pb-20 pt-4 space-y-20">
@@ -59,7 +59,7 @@ export default function AboutSection({ isOpen: propsIsOpen, onToggle }: AboutSec
                                 className="grid grid-cols-1 md:grid-cols-12 gap-10 border-b border-white/10 pb-20 max-w-6xl mx-auto"
                             >
                                 <div className="md:col-span-3">
-                                    <h2 className="font-sans text-[10px] md:text-xs text-[#637381] uppercase tracking-[0.2em]">Sobre Mí</h2>
+                                    <h2 className="font-sans text-[10px] md:text-xs text-[#637381] uppercase tracking-[0.2em]">Who I am</h2>
                                 </div>
                                 <div className="md:col-span-8 md:col-start-5 space-y-8 text-left">
                                     <p className="text-xl md:text-2xl font-sans font-medium leading-relaxed text-zinc-200">
@@ -80,7 +80,7 @@ export default function AboutSection({ isOpen: propsIsOpen, onToggle }: AboutSec
                                             className="inline-flex items-center gap-3 px-6 py-3 border border-zinc-700 rounded-full font-sans text-[10px] md:text-xs uppercase tracking-[0.25em] text-zinc-300 hover:bg-[#637381] hover:text-black hover:border-[#637381] transition-all duration-300 group"
                                         >
                                             <Download className="h-4 w-4 group-hover:scale-110 transition-transform" />
-                                            Descargar CV Completo
+                                            CV
                                         </a>
                                     </div>
                                 </div>

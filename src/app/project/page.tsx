@@ -65,6 +65,29 @@ function ProjectViewer() {
                 return;
             }
 
+            // Remap categories to English
+            const lowerCat = found.category?.toLowerCase().trim();
+            if (
+              lowerCat === "videoclips conceptuales" ||
+              lowerCat === "videos conceptuales" ||
+              lowerCat === "dirección creativa & coreografía" ||
+              lowerCat === "creative direction & choreography"
+            ) {
+              found.category = "Creative Direction & Choreography";
+            } else if (
+              lowerCat === "casting" ||
+              lowerCat === "producción y gestión de proyectos audiovisuales" ||
+              lowerCat === "producción y gestión de eventos audiovisuales" ||
+              lowerCat === "production & event management"
+            ) {
+              found.category = "Production & Event Management";
+            } else if (
+              lowerCat === "postproducción" ||
+              lowerCat === "postproduction"
+            ) {
+              found.category = "Postproduction";
+            }
+
             setProject(found);
         } catch (error) {
             console.error("Error fetching project:", error);

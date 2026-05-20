@@ -24,20 +24,12 @@ export default function Header() {
             {/* Right: Navigation Links */}
             <nav className="flex gap-6 md:gap-10">
                 <Link
-                    href="/#sobre-mi"
+                    href="/#say-hi"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     className="font-reenie text-3xl md:text-4xl z-50 relative tracking-widest hover:text-accent transition-colors pt-1"
                 >
-                    SOBRE MÍ
-                </Link>
-                <Link
-                    href="/#contacto"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    className="font-reenie text-3xl md:text-4xl z-50 relative tracking-widest hover:text-accent transition-colors pt-1"
-                >
-                    CONTACTO
+                    Say Hi
                 </Link>
             </nav>
         </header>

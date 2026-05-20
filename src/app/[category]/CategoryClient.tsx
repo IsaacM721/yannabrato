@@ -25,10 +25,39 @@ export default function CategoryClient({ category }: { category: string }) {
         const fetchProjects = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "projects"));
-                const allProjects = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })) as Project[];
+                const allProjects = querySnapshot.docs.map(doc => {
+                    const data = doc.data() as Project;
+                    let categoryName = data.category;
+
+                    // Remap categories as requested
+                    const lowerCat = categoryName?.toLowerCase().trim();
+                    if (
+                      lowerCat === "videoclips conceptuales" ||
+                      lowerCat === "videos conceptuales" ||
+                      lowerCat === "dirección creativa & coreografía" ||
+                      lowerCat === "creative direction & choreography"
+                    ) {
+                      categoryName = "Creative Direction & Choreography";
+                    } else if (
+                      lowerCat === "casting" ||
+                      lowerCat === "producción y gestión de proyectos audiovisuales" ||
+                      lowerCat === "producción y gestión de eventos audiovisuales" ||
+                      lowerCat === "production & event management"
+                    ) {
+                      categoryName = "Production & Event Management";
+                    } else if (
+                      lowerCat === "postproducción" ||
+                      lowerCat === "postproduction"
+                    ) {
+                      categoryName = "Postproduction";
+                    }
+
+                    return {
+                        ...data,
+                        id: doc.id,
+                        category: categoryName
+                    };
+                }) as Project[];
 
                 // Filter by category slug and published status
                 const filtered = allProjects.filter(p => slugify(p.category) === category && p.published !== false);

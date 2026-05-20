@@ -30,10 +30,35 @@ export default function WorkPage() {
     const fetchData = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, "projects"));
-            const data = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })) as Project[];
+            const data = querySnapshot.docs.map(doc => {
+                const p = doc.data() as Project;
+                let category = p.category;
+
+                // Remap categories as requested
+                const lowerCat = category?.toLowerCase().trim();
+                if (
+                  lowerCat === "videoclips conceptuales" ||
+                  lowerCat === "videos conceptuales" ||
+                  lowerCat === "dirección creativa & coreografía" ||
+                  lowerCat === "creative direction & choreography"
+                ) {
+                  category = "Creative Direction & Choreography";
+                } else if (
+                  lowerCat === "casting" ||
+                  lowerCat === "producción y gestión de proyectos audiovisuales" ||
+                  lowerCat === "producción y gestión de eventos audiovisuales" ||
+                  lowerCat === "production & event management"
+                ) {
+                  category = "Production & Event Management";
+                } else if (
+                  lowerCat === "postproducción" ||
+                  lowerCat === "postproduction"
+                ) {
+                  category = "Postproduction";
+                }
+
+                return { ...p, id: doc.id, category };
+            }) as Project[];
             setProjects(data);
         } catch (error) {
             console.error("Error fetching projects:", error);

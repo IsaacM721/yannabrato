@@ -16,9 +16,9 @@ export function slugify(text: string): string {
 }
 
 export const PREDEFINED_ORDER = [
-  "dirección creativa & coreografía",
-  "producción y gestión de proyectos audiovisuales",
-  "postproducción"
+  "creative direction & choreography",
+  "production & event management",
+  "postproduction"
 ];
 
 export function sortCategories(a: string, b: string): number {

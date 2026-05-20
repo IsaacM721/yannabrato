@@ -34,22 +34,6 @@ export default function Footer() {
                     >
                         Email
                     </a>
-                    <Link
-                        href="/#sobre-mi"
-                        className="hover:text-accent transition-colors"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        Sobre Mí
-                    </Link>
-                    <Link
-                        href="/#contacto"
-                        className="hover:text-accent transition-colors"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        Contacto
-                    </Link>
                 </div>
 
                 <div className="font-sans text-[8px] uppercase tracking-[0.3em] text-[#637381] opacity-40 text-right">

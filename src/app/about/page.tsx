@@ -33,7 +33,7 @@ export default function AboutPage() {
                     className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-32 border-b border-white/10 pb-20 max-w-6xl mx-auto"
                 >
                     <div className="md:col-span-3">
-                        <h2 className="font-sans text-[10px] md:text-xs text-[#637381] uppercase tracking-[0.2em] sticky top-32">Sobre Mí</h2>
+                        <h2 className="font-sans text-[10px] md:text-xs text-[#637381] uppercase tracking-[0.2em] sticky top-32">Who I am</h2>
                     </div>
                     <div className="md:col-span-8 md:col-start-5 space-y-8">
                         <p className="text-xl md:text-2xl font-sans font-medium leading-relaxed text-zinc-200">
@@ -54,7 +54,7 @@ export default function AboutPage() {
                                 className="inline-flex items-center gap-3 px-6 py-3 border border-zinc-700 rounded-full font-sans text-[10px] md:text-xs uppercase tracking-[0.25em] text-zinc-300 hover:bg-[#637381] hover:text-black hover:border-[#637381] transition-all duration-300 group"
                             >
                                 <Download className="h-4 w-4 group-hover:scale-110 transition-transform" />
-                                Descargar CV Completo
+                                CV
                             </a>
                         </div>
                     </div>

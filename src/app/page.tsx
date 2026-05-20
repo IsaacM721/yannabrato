@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import AboutSection from "@/components/AboutSection";
 import ContactAccordion from "@/components/ContactAccordion";
 import HeroVideo from "@/components/HeroVideo";
-import { sortCategories } from "@/lib/utils";
+import { sortCategories, slugify } from "@/lib/utils";
 
 interface Project {
   id: string;
@@ -50,10 +50,25 @@ export default function Home() {
 
         // Remap categories as requested
         const lowerCat = category?.toLowerCase().trim();
-        if (lowerCat === "videoclips conceptuales" || lowerCat === "videos conceptuales") {
-          category = "dirección creativa & coreografía";
-        } else if (lowerCat === "casting") {
-          category = "producción y gestión de proyectos audiovisuales";
+        if (
+          lowerCat === "videoclips conceptuales" ||
+          lowerCat === "videos conceptuales" ||
+          lowerCat === "dirección creativa & coreografía" ||
+          lowerCat === "creative direction & choreography"
+        ) {
+          category = "Creative Direction & Choreography";
+        } else if (
+          lowerCat === "casting" ||
+          lowerCat === "producción y gestión de proyectos audiovisuales" ||
+          lowerCat === "producción y gestión de eventos audiovisuales" ||
+          lowerCat === "production & event management"
+        ) {
+          category = "Production & Event Management";
+        } else if (
+          lowerCat === "postproducción" ||
+          lowerCat === "postproduction"
+        ) {
+          category = "Postproduction";
         }
 
         return { ...data, id: doc.id, category };
@@ -88,9 +103,9 @@ export default function Home() {
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash;
-      if (hash === "#contacto") {
+      if (hash === "#contacto" || hash === "#say-hi") {
         setOpenCategory("contacto");
-      } else if (hash === "#sobre-mi") {
+      } else if (hash === "#sobre-mi" || hash === "#who-i-am") {
         setOpenCategory("sobre-mi");
       }
     };
@@ -104,6 +119,27 @@ export default function Home() {
       window.removeEventListener("hashchange", handleHash);
     };
   }, []);
+
+  // Smooth scroll to the opened category
+  useEffect(() => {
+    if (openCategory) {
+      const elementId = openCategory === "sobre-mi" ? "who-i-am" : 
+                        openCategory === "contacto" ? "say-hi" : 
+                        slugify(openCategory);
+
+      const timer = setTimeout(() => {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      }, 350);
+
+      return () => clearTimeout(timer);
+    }
+  }, [openCategory]);
 
   // Extract unique categories from projects (unifying duplicates)
   const categoriesList = useMemo(() => {
@@ -167,13 +203,14 @@ export default function Home() {
         ) : categoriesList.length > 0 ? (
           <div className="mt-10">
             {categoriesList.map((cat, index) => (
-              <CategoryAccordion
-                key={cat}
-                title={cat}
-                projects={projects.filter(p => p.category.toLowerCase().trim() === cat.toLowerCase().trim())}
-                isOpen={openCategory === cat}
-                onToggle={() => setOpenCategory(openCategory === cat ? null : cat)}
-              />
+              <div key={cat} id={slugify(cat)} className="scroll-mt-menu">
+                <CategoryAccordion
+                  title={cat}
+                  projects={projects.filter(p => p.category.toLowerCase().trim() === cat.toLowerCase().trim())}
+                  isOpen={openCategory === cat}
+                  onToggle={() => setOpenCategory(openCategory === cat ? null : cat)}
+                />
+              </div>
             ))}
           </div>
         ) : (
@@ -184,14 +221,14 @@ export default function Home() {
           </div>
         )}
 
-        <div id="sobre-mi">
+        <div id="who-i-am" className="scroll-mt-menu">
           <AboutSection 
             isOpen={openCategory === "sobre-mi"} 
             onToggle={() => setOpenCategory(openCategory === "sobre-mi" ? null : "sobre-mi")}
           />
         </div>
 
-        <div id="contacto">
+        <div id="say-hi" className="scroll-mt-menu">
           <ContactAccordion 
             isOpen={openCategory === "contacto"} 
             onToggle={() => setOpenCategory(openCategory === "contacto" ? null : "contacto")}
