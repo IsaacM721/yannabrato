@@ -243,13 +243,10 @@
           "stringValue": "issade-live-performance"
         },
         "videoUrl": {
-          "stringValue": ""
+          "stringValue": "https://www.youtube.com/watch?v=eo0pO1L6RrM"
         },
         "updatedAt": {
           "stringValue": "2026-03-14T01:46:44.881Z"
-        },
-        "thumbnailPoster": {
-          "stringValue": ""
         },
         "category": {
           "stringValue": "Dirección creativa & coreografía"
@@ -258,7 +255,7 @@
           "booleanValue": true
         },
         "thumbnail": {
-          "stringValue": ""
+          "stringValue": "https://storage.googleapis.com/yannabratoo.firebasestorage.app/thumbnails/1778792506365-issade-performance.mp4"
         },
         "description": {
           "stringValue": "Coreografía para la presentación en vivo de la artista Issade."
@@ -271,6 +268,9 @@
         },
         "title": {
           "stringValue": "Issade — Live Performance"
+        },
+        "thumbnailPoster": {
+          "stringValue": "https://storage.googleapis.com/yannabratoo.firebasestorage.app/thumbnails/poster-1778792506365-issade.jpg"
         }
       },
       "createTime": "2026-03-10T04:08:40.267504Z",
