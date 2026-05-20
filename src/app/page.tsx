@@ -33,10 +33,6 @@ export default function Home() {
   const [heroVideoUrl, setHeroVideoUrl] = useState("");
 
   useEffect(() => {
-    // Only scroll to top if there's no hash in the URL
-    if (!window.location.hash) {
-      window.scrollTo(0, 0);
-    }
     fetchData();
     fetchSettings();
   }, []);
@@ -96,50 +92,6 @@ export default function Home() {
       console.error("Error fetching settings:", error);
     }
   };
-
-  const [openCategory, setOpenCategory] = useState<string | null>(null);
-
-  // Handle URL hashes to open accordions automatically
-  useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash;
-      if (hash === "#contacto" || hash === "#say-hi") {
-        setOpenCategory("contacto");
-      } else if (hash === "#sobre-mi" || hash === "#who-i-am") {
-        setOpenCategory("sobre-mi");
-      }
-    };
-
-    // Check on mount (after a slight delay to ensure content is loaded)
-    const timeoutId = setTimeout(handleHash, 100);
-    
-    window.addEventListener("hashchange", handleHash);
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener("hashchange", handleHash);
-    };
-  }, []);
-
-  // Smooth scroll to the opened category
-  useEffect(() => {
-    if (openCategory) {
-      const elementId = openCategory === "sobre-mi" ? "who-i-am" : 
-                        openCategory === "contacto" ? "say-hi" : 
-                        slugify(openCategory);
-
-      const timer = setTimeout(() => {
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        }
-      }, 350);
-
-      return () => clearTimeout(timer);
-    }
-  }, [openCategory]);
 
   // Extract unique categories from projects (unifying duplicates)
   const categoriesList = useMemo(() => {
@@ -202,13 +154,11 @@ export default function Home() {
           </div>
         ) : categoriesList.length > 0 ? (
           <div className="mt-10">
-            {categoriesList.map((cat, index) => (
-              <div key={cat} id={slugify(cat)} className="scroll-mt-menu">
+            {categoriesList.map((cat) => (
+              <div key={cat} id={slugify(cat)}>
                 <CategoryAccordion
                   title={cat}
                   projects={projects.filter(p => p.category.toLowerCase().trim() === cat.toLowerCase().trim())}
-                  isOpen={openCategory === cat}
-                  onToggle={() => setOpenCategory(openCategory === cat ? null : cat)}
                 />
               </div>
             ))}
@@ -221,18 +171,12 @@ export default function Home() {
           </div>
         )}
 
-        <div id="who-i-am" className="scroll-mt-menu">
-          <AboutSection 
-            isOpen={openCategory === "sobre-mi"} 
-            onToggle={() => setOpenCategory(openCategory === "sobre-mi" ? null : "sobre-mi")}
-          />
+        <div id="who-i-am">
+          <AboutSection />
         </div>
 
-        <div id="say-hi" className="scroll-mt-menu">
-          <ContactAccordion 
-            isOpen={openCategory === "contacto"} 
-            onToggle={() => setOpenCategory(openCategory === "contacto" ? null : "contacto")}
-          />
+        <div id="say-hi">
+          <ContactAccordion />
         </div>
 
       </div>
